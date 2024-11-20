@@ -72,11 +72,14 @@ class CodeGenerator {
         const model = this.parser.parse(modelName).value; // Get the Ast node of the model
         const template = this.templates.get(this.GENERIC_PROMPT_SERVICE) + this.templates.get(aiSystem);
         // promptInvokation = promptName#var1;var2;...
-        const promptName = promptInvokation.split('#')[0];
+        const params = promptInvokation.split('#');
+        const promptName = params[0];
         let variables = [];
-        const variablesString = promptInvokation.split('#')[1].split(';');
-        if (variablesString[0].length != 0)
-            variables = variablesString;
+        if (params.length > 1) {
+            const variablesString = promptInvokation.split('#')[1].split(';');
+            if (variablesString[0].length != 0)
+                variables = variablesString;
+        }
         return ((0, ast_js_1.isModel)(model) ? this.model2Code(model, aiSystem, template, promptName, variables) : undefined);
     }
     /**
