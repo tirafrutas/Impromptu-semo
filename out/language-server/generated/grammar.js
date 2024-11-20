@@ -459,7 +459,7 @@ const ImpromptuGrammar = () => loadedImpromptuGrammar !== null && loadedImprompt
               "$ref": "#/rules@78"
             },
             "arguments": [],
-            "cardinality": "*"
+            "cardinality": "?"
           }
         ]
       },
@@ -700,7 +700,7 @@ const ImpromptuGrammar = () => loadedImpromptuGrammar !== null && loadedImprompt
               "$ref": "#/rules@78"
             },
             "arguments": [],
-            "cardinality": "*"
+            "cardinality": "?"
           }
         ]
       },
@@ -2634,24 +2634,8 @@ const ImpromptuGrammar = () => loadedImpromptuGrammar !== null && loadedImprompt
                 "value": "("
               },
               {
-                "$type": "Assignment",
-                "feature": "pars",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@56"
-                  },
-                  "arguments": []
-                }
-              },
-              {
                 "$type": "Group",
                 "elements": [
-                  {
-                    "$type": "Keyword",
-                    "value": ","
-                  },
                   {
                     "$type": "Assignment",
                     "feature": "pars",
@@ -2663,16 +2647,37 @@ const ImpromptuGrammar = () => loadedImpromptuGrammar !== null && loadedImprompt
                       },
                       "arguments": []
                     }
+                  },
+                  {
+                    "$type": "Group",
+                    "elements": [
+                      {
+                        "$type": "Keyword",
+                        "value": ","
+                      },
+                      {
+                        "$type": "Assignment",
+                        "feature": "pars",
+                        "operator": "+=",
+                        "terminal": {
+                          "$type": "RuleCall",
+                          "rule": {
+                            "$ref": "#/rules@56"
+                          },
+                          "arguments": []
+                        }
+                      }
+                    ],
+                    "cardinality": "*"
                   }
                 ],
-                "cardinality": "*"
+                "cardinality": "?"
               },
               {
                 "$type": "Keyword",
                 "value": ")"
               }
-            ],
-            "cardinality": "?"
+            ]
           },
           {
             "$type": "Group",
@@ -2959,23 +2964,23 @@ const ImpromptuGrammar = () => loadedImpromptuGrammar !== null && loadedImprompt
           },
           {
             "$type": "Keyword",
-            "value": "less than"
+            "value": "less\\\\sthan"
           },
           {
             "$type": "Keyword",
-            "value": "more than"
+            "value": "more\\\\sthan"
           },
           {
             "$type": "Keyword",
-            "value": "less or equal than"
+            "value": "less\\\\sor\\\\sequal\\\\sthan"
           },
           {
             "$type": "Keyword",
-            "value": "more or equal than"
+            "value": "more\\\\sor\\\\sequal\\\\sthan"
           },
           {
             "$type": "Keyword",
-            "value": "different from"
+            "value": "different\\\\sfrom"
           }
         ]
       },
@@ -3111,7 +3116,7 @@ const ImpromptuGrammar = () => loadedImpromptuGrammar !== null && loadedImprompt
           },
           {
             "$type": "Keyword",
-            "value": "source code"
+            "value": "source\\\\scode"
           }
         ]
       },
@@ -3191,15 +3196,15 @@ const ImpromptuGrammar = () => loadedImpromptuGrammar !== null && loadedImprompt
         "elements": [
           {
             "$type": "Keyword",
-            "value": "first person"
+            "value": "first\\\\sperson"
           },
           {
             "$type": "Keyword",
-            "value": "second person"
+            "value": "second\\\\sperson"
           },
           {
             "$type": "Keyword",
-            "value": "third person"
+            "value": "third\\\\sperson"
           }
         ]
       },
@@ -3235,15 +3240,15 @@ const ImpromptuGrammar = () => loadedImpromptuGrammar !== null && loadedImprompt
           },
           {
             "$type": "Keyword",
-            "value": "comic book art"
+            "value": "comic\\\\sbook\\\\sart"
           },
           {
             "$type": "Keyword",
-            "value": "digital art"
+            "value": "digital\\\\sart"
           },
           {
             "$type": "Keyword",
-            "value": "3D art"
+            "value": "3D\\\\sart"
           }
         ]
       },
@@ -3263,23 +3268,23 @@ const ImpromptuGrammar = () => loadedImpromptuGrammar !== null && loadedImprompt
         "elements": [
           {
             "$type": "Keyword",
-            "value": "overhead view"
+            "value": "overhead\\\\sview"
           },
           {
             "$type": "Keyword",
-            "value": "low angle"
+            "value": "low\\\\sangle"
           },
           {
             "$type": "Keyword",
-            "value": "aerial view"
+            "value": "aerial\\\\sview"
           },
           {
             "$type": "Keyword",
-            "value": "tilted frame"
+            "value": "tilted\\\\sframe"
           },
           {
             "$type": "Keyword",
-            "value": "over-the-shoulder shot"
+            "value": "over-the-shoulder\\\\sshot"
           }
         ]
       },
@@ -3296,7 +3301,7 @@ const ImpromptuGrammar = () => loadedImpromptuGrammar !== null && loadedImprompt
       "dataType": "string",
       "definition": {
         "$type": "Keyword",
-        "value": "fast shutter"
+        "value": "fast\\\\sshutter"
       },
       "definesHiddenTokens": false,
       "entry": false,
@@ -3342,7 +3347,7 @@ const ImpromptuGrammar = () => loadedImpromptuGrammar !== null && loadedImprompt
           },
           {
             "$type": "Keyword",
-            "value": "dark shadows"
+            "value": "dark\\\\sshadows"
           }
         ]
       },
@@ -3362,7 +3367,7 @@ const ImpromptuGrammar = () => loadedImpromptuGrammar !== null && loadedImprompt
         "elements": [
           {
             "$type": "Keyword",
-            "value": "extreme close-up"
+            "value": "extreme\\\\sclose-up"
           },
           {
             "$type": "Keyword",
@@ -3370,15 +3375,15 @@ const ImpromptuGrammar = () => loadedImpromptuGrammar !== null && loadedImprompt
           },
           {
             "$type": "Keyword",
-            "value": "medium shot"
+            "value": "medium\\\\sshot"
           },
           {
             "$type": "Keyword",
-            "value": "long shot"
+            "value": "long\\\\sshot"
           },
           {
             "$type": "Keyword",
-            "value": "extreme long shot"
+            "value": "extreme\\\\slong\\\\sshot"
           }
         ]
       },
