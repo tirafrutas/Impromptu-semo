@@ -22,3 +22,4 @@ out/language-server/impromptu-validator.js.map
 out/language-server/generated/ast.js
 out/language-server/generated/ast.js.map
 out/language-server/generated/grammar.js
+.DS_Store
