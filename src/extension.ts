@@ -148,10 +148,12 @@ async function requestPromptAndValidation(generator: CodeGenerator, model: strin
                     placeHolder: 'Select which prompt do you want to query the model with.',
                     canPickMany: false
                 });
-            return pick?.label;
+            const variables = await vscode.window.showInputBox({placeHolder: 'Type in the values for the variables, separated by semicolon.'});
+            return pick?.label + '#' + variables;
         }
-        if (quickPickItems && quickPickItems.length == 1)
+        if (quickPickItems && quickPickItems.length == 1) {
             return quickPickItems[0].label;
+        }
     }
     return undefined;
 }

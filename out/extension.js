@@ -164,10 +164,12 @@ function requestPromptAndValidation(generator, model) {
                     placeHolder: 'Select which prompt do you want to query the model with.',
                     canPickMany: false
                 });
-                return pick === null || pick === void 0 ? void 0 : pick.label;
+                const variables = yield vscode.window.showInputBox({ placeHolder: 'Type in the values for the variables, separated by semicolon.' });
+                return (pick === null || pick === void 0 ? void 0 : pick.label) + '#' + variables;
             }
-            if (quickPickItems && quickPickItems.length == 1)
+            if (quickPickItems && quickPickItems.length == 1) {
                 return quickPickItems[0].label;
+            }
         }
         return undefined;
     });

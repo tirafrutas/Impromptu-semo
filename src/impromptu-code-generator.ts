@@ -13,7 +13,7 @@ export interface Generator {
     // Load the Abstract Syntax Tree of the .prm active file
     generateCode(model : string | AstNode, aiSystem : string, prompt: string, context: ExtensionContext) : string | undefined;
     // Receives the parsed AST, generates the Python code, and returns it
-    model2Code(model : Model, provider: string, template: string, prompt: string, context: ExtensionContext) : string | undefined;
+    model2Code(model : Model, provider: string, template: string, prompt: string, variables: string[], context: ExtensionContext) : string | undefined;
 }
  
 /**
@@ -60,10 +60,15 @@ export class CodeGenerator implements Generator {
      * @param promptName Name of the prompt
      * @returns 
      */
-    generateCode(modelName: string, aiSystem: string, promptName: string) : string | undefined {
+    generateCode(modelName: string, aiSystem: string, promptInvokation: string) : string | undefined {
         const model = this.parser.parse(modelName).value; // Get the Ast node of the model
         const template = this.templates.get(this.GENERIC_PROMPT_SERVICE) + this.templates.get(aiSystem);
-        return (isModel(model) ? this.model2Code(model, aiSystem, template, promptName) : undefined);
+        // promptInvokation = promptName#var1;var2;...
+        const promptName = promptInvokation.split('#')[0];
+        let variables: string[] = [];
+        const variablesString = promptInvokation.split('#')[1].split(';');
+        if (variablesString[0].length != 0) variables = variablesString;
+        return (isModel(model) ? this.model2Code(model, aiSystem, template, promptName, variables) : undefined);
     }
     /**
      *  Generation of the output code string
@@ -74,11 +79,11 @@ export class CodeGenerator implements Generator {
      * @param promptName Asset from the file that it will be generated
      * @returns template modified
      */
-    model2Code(model: Model, aiSystem: string, template: string, promptName: string) : string | undefined {
+    model2Code(model: Model, aiSystem: string, template: string, promptName: string, variables: string[]) : string | undefined {
         const prompt = this.getPrompt(model, promptName);
         if (prompt) {
             const media = this.getPromptOutputMedia(prompt)
-            const promptCode = generatePromptCode(model, aiSystem, prompt)?.toString();
+            const promptCode = generatePromptCode(model, aiSystem, prompt, variables)?.toString();
             if (promptCode) {
                 const validators = generatePromptTraitValidators(model, prompt);
                 return template

@@ -68,10 +68,16 @@ class CodeGenerator {
      * @param promptName Name of the prompt
      * @returns
      */
-    generateCode(modelName, aiSystem, promptName) {
+    generateCode(modelName, aiSystem, promptInvokation) {
         const model = this.parser.parse(modelName).value; // Get the Ast node of the model
         const template = this.templates.get(this.GENERIC_PROMPT_SERVICE) + this.templates.get(aiSystem);
-        return ((0, ast_js_1.isModel)(model) ? this.model2Code(model, aiSystem, template, promptName) : undefined);
+        // promptInvokation = promptName#var1;var2;...
+        const promptName = promptInvokation.split('#')[0];
+        let variables = [];
+        const variablesString = promptInvokation.split('#')[1].split(';');
+        if (variablesString[0].length != 0)
+            variables = variablesString;
+        return ((0, ast_js_1.isModel)(model) ? this.model2Code(model, aiSystem, template, promptName, variables) : undefined);
     }
     /**
      *  Generation of the output code string
@@ -82,12 +88,12 @@ class CodeGenerator {
      * @param promptName Asset from the file that it will be generated
      * @returns template modified
      */
-    model2Code(model, aiSystem, template, promptName) {
+    model2Code(model, aiSystem, template, promptName, variables) {
         var _a;
         const prompt = this.getPrompt(model, promptName);
         if (prompt) {
             const media = this.getPromptOutputMedia(prompt);
-            const promptCode = (_a = (0, generate_prompt_1.generatePromptCode)(model, aiSystem, prompt)) === null || _a === void 0 ? void 0 : _a.toString();
+            const promptCode = (_a = (0, generate_prompt_1.generatePromptCode)(model, aiSystem, prompt, variables)) === null || _a === void 0 ? void 0 : _a.toString();
             if (promptCode) {
                 const validators = (0, generate_prompt_1.generatePromptTraitValidators)(model, prompt);
                 return template
